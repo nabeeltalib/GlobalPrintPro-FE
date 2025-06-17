@@ -1,0 +1,50 @@
+GLOBAL PRINT CO. WEBSITE - GODADDY UPLOAD INSTRUCTIONS
+UPDATED WITH NEW CONTENT FROM ATTACHED DOCUMENT
+
+WHAT'S INCLUDED:
+- index.html (main website file with updated content)
+- assets/ folder (CSS and JavaScript files)
+- .htaccess (server configuration)
+
+UPLOAD STEPS:
+1. Login to your GoDaddy hosting account
+2. Open cPanel or File Manager
+3. Navigate to public_html folder
+4. Delete any existing files (index.html, etc.)
+5. Upload ALL files from this deployment-package folder
+6. Your website will be live at globalprintco.com immediately
+
+FILES TO UPLOAD:
+✓ index.html (updated with new messaging)
+✓ assets/ (entire folder)
+✓ .htaccess
+
+NEW FEATURES INCLUDED:
+- Updated headline: "Your Global Partner for Print, Swag, Kits & Fulfillment — Delivered Fast, Anywhere"
+- New intro paragraph emphasizing stress-free branded materials
+- Updated services: Branded Swag & Giveaways, Employee Kits, Warehousing & Fulfillment
+- Premium brand partnerships (Nike, Yeti, Under Armour, Moleskine)
+- 70+ countries coverage (updated from 65+)
+- Comprehensive FAQ section with 15 questions
+- Updated contact: rohitd@globalprintco.com
+- Address: 1150 Nw 72nd, Miami, FL 33126
+- Phone: 334-796-0770
+- Final CTA section with company mission
+- Mobile-responsive design
+- SEO optimization
+- Security headers
+- Performance optimization
+
+AFTER UPLOAD:
+- Visit globalprintco.com to verify
+- Test contact form submission
+- Check all pages work on mobile
+- Test FAQ accordion functionality
+- Verify SSL certificate is active
+
+CONTACT FORM NOTE:
+Forms currently connect to backend API. For full functionality, 
+either keep the current setup or migrate to GoDaddy database.
+
+Your updated professional website with authentic Global Print Co. 
+content is ready for immediate deployment!

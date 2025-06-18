@@ -1,7 +1,7 @@
-module.exports = {
+export default {
   apps: [
     {
-      name: "GlobalPrint",
+      name: "your-app-name",
       script: "dist/index.js",
       env: {
         NODE_ENV: "development",

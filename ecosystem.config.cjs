@@ -1,8 +1,9 @@
-export default {
+// ecosystem.config.cjs
+module.exports = {
   apps: [
     {
-      name: "your-app-name",
-      script: "dist/index.js",
+      name: "global-print-pro",
+      script: "./dist/index.js",
       env: {
         NODE_ENV: "development",
       },

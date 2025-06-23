@@ -11,7 +11,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Card className="bg-white hover:shadow-md transition-shadow cursor-pointer group">
       <div className="aspect-square bg-gray-100 rounded-t-lg overflow-hidden">
         <img
-          src={product.imageUrl}
+          src={product.image}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform"
         />

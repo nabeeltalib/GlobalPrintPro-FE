@@ -17,6 +17,18 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useLocation, useSearch } from "wouter";
 
+const categories: any[] = [];
+
+// [
+//   { value: "all", label: "All Categories" },
+//   { value: "apparel", label: "Apparel" },
+//   { value: "drinkware", label: "Drinkware" },
+//   { value: "technology", label: "Technology" },
+//   { value: "bags", label: "Bags" },
+//   { value: "office", label: "Office Supplies" },
+//   { value: "outdoor", label: "Outdoor & Sports" },
+// ];
+
 export default function Products() {
   const [, setLocation] = useLocation();
   const search = useSearch();
@@ -29,6 +41,9 @@ export default function Products() {
   const features = searchParams.getAll("features");
   const sortBy = searchParams.get("sortBy") || "name";
   const page = parseInt(searchParams.get("page") || "1");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [showFilters, setShowFilters] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState(query);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -38,19 +53,48 @@ export default function Products() {
     sortBy,
   });
 
-  // Fetch products
-  const { data: productsResult, isLoading: productsLoading } = useQuery({
-    queryKey: [
-      "/api/products",
-      { query, category, priceRange, features, sortBy, page },
-    ],
-  });
+  const categoriesLoading = false;
 
-  // Fetch categories
-  const { data: categories, isLoading: categoriesLoading } = useQuery<
-    Category[]
-  >({
-    queryKey: ["/api/categories"],
+  const { data: productsResult, isLoading: productsLoading } = useQuery({
+    queryKey: ["/api/sage/products/search", searchTerm, category],
+    queryFn: async () => {
+      try {
+        const params = new URLSearchParams();
+        if (searchTerm) params.append("keyword", searchTerm);
+        if (category !== "all") params.append("category", category);
+        params.append("limit", "12");
+
+        const response = await fetch(`/api/sage/products/search?${params}`);
+        const result = await response.json();
+
+        let products = [];
+
+        if (result.success && result.data?.products) {
+          products = result.data.products.map((product: any) => ({
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            category: product.category,
+            price: product.pricing?.basePrice || 0,
+            image:
+              product.images?.primary ||
+              "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop",
+            rating: product.supplier?.rating || 4.5,
+            supplier: product.supplier?.name || "Premium Supplier",
+            inStock: product.availability?.inStock !== false,
+            promoPlaceUrl: `https://promoplace.com/globalprintco/${product.id}`,
+          }));
+
+          return {
+            products,
+            totalCount: result.data.totalCount,
+            totalPages: result.data.totalPages,
+          };
+        }
+      } catch (error) {
+        console.error("SAGE API error:", error);
+      }
+    },
   });
 
   const updateURL = (newParams: Partial<SearchParams>) => {
@@ -93,9 +137,9 @@ export default function Products() {
     updateURL({ page: newPage });
   };
 
-  const products = productsResult?.products || [];
-  const total = productsResult?.total || 0;
-  const totalPages = Math.ceil(total / 9);
+  const products = (productsResult as any)?.products || [];
+  const total = (productsResult as any)?.totalCount || 0;
+  const totalPages = (productsResult as any)?.totalPages || 1;
 
   return (
     <div className="min-h-screen bg-gray-50">
